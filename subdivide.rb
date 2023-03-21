@@ -1,18 +1,17 @@
+def padding(matriz)
+    elems_por_submatriz = matriz[0].length
+    matriz.each do |submatriz|
+        if submatriz.length < elems_por_submatriz
+            submatriz.push(nil)
+        end
+    end
+end
+
 def dividir_array(array, num_subdivisiones)
     matriz = []
-    elems_por_submatriz = (array.length / num_subdivisiones) + (array.length % num_subdivisiones != 0 ? 1 : 0)
-    for i in 1..num_subdivisiones
-        submatriz = []
-        for j in 1..elems_por_submatriz
-            if (i - 1) * elems_por_submatriz + (j-1) >=  array.length
-                submatriz.push(nil)
-            else
-                submatriz.push(array[(i-1) * elems_por_submatriz + (j-1)])
-            end
-        end
-        matriz.push(submatriz)
-    end
-
+    num_subdivisiones.times { matriz.push([]) }
+    array.each_with_index { |val, idx| matriz[idx % num_subdivisiones].push val }
+    padding(matriz)
     return matriz
 end
 
